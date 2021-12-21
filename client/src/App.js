@@ -5,7 +5,7 @@ import SingleThought from './pages/SingleThought';
 import Profile from './pages/Profile';
 import Signup from './pages/Signup';
 
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 import { ApolloProvider, ApolloClient, InMemoryCache, createHttpLink } from '@apollo/client';
 
@@ -29,13 +29,17 @@ function App() {
          <Router>
             <div className='flex-column justify-flex-start min-100-vh'>
                <Header />
-                  <div className='container'>
+               <div className='container'>
+                  <Switch>
                      <Route exact path='/' component={Home} />
                      <Route exact path='/login' component={Login} />
                      <Route exact path='/signup' component={Signup} />
-                     <Route exact path='/profile' component={Profile} />
-                     <Route exact path='/thought' component={SingleThought} />
-                  </div>
+                     <Route exact path='/profile/:username?' component={Profile} />
+                     <Route exact path='/thought/:id' component={SingleThought} />
+
+                     <Route component={NoMatch} />
+                  </Switch>
+               </div>
                <Footer />
             </div>
          </Router>
