@@ -56,3 +56,47 @@ export const QUERY_USER = gql`
       }
    }
 `;
+
+//! Because we aren't passing any variables to it, we can simply name the query, and GraphQL will handle the rest
+//* ALL user's data for his/her personal profile page
+export const QUERY_ME = gql`
+   {
+      me {
+         _id
+         username
+         email
+         friendCount
+         thoughts {
+            _id
+            thoughtText
+            createdAt
+            reactionCount
+            reactions {
+               _id
+               createdAt
+               reactionBody
+               username
+            }
+         }
+         friends {
+            _id
+            username
+         }
+      }
+   }
+`;
+
+export const QUERY_ME_BASIC = gql`
+   {
+      me {
+         _id
+         username
+         email
+         friendCount
+         friends {
+            _id
+            username
+         }
+      }
+   }
+`;
