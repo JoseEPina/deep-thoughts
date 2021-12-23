@@ -1,16 +1,18 @@
 import React from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom'; //* React Hook to parse parameters from the URL
 import { useQuery } from '@apollo/client';
 import { QUERY_THOUGHT } from '../utils/queries';
 import ReactionList from '../components/ReactionList';
+import Auth from '../utils/auth';
+import ReactionForm from '../components/ReactionForm';
 
 const SingleThought = (props) => {
    const { id: thoughtId } = useParams();
-
-   const { loading, data } = useQuery(QUERY_THOUGHT, { variables: { id: thoughtId } });
-
+   //* pass variables to query in second paramenter 'variables'.
+   const { loading, data } = useQuery(QUERY_THOUGHT, {
+      variables: { id: thoughtId },
+   });
    const thought = data?.thought || {};
-
    if (loading) {
       return <div>Loading...</div>;
    }
@@ -27,8 +29,8 @@ const SingleThought = (props) => {
                <p>{thought.thoughtText}</p>
             </div>
          </div>
-
          {thought.reactionCount > 0 && <ReactionList reactions={thought.reactions} />}
+         {Auth.loggedIn() && <ReactionForm thoughtId={thought._id} />}
       </div>
    );
 };
